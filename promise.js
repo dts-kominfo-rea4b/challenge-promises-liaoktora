@@ -1,28 +1,39 @@
 const { promiseTheaterIXX, promiseTheaterVGC } = require("./external.js");
 
 // TODO: Buat fungsi promiseOutput sesuai ketentuan readme
-let tidakmarah = 0;
-let marah = 0;
-
-for (let i = 0; i < promiseTheaterIXX.length; i++) {
-    if (hasilsetelahmenonton.hasil = marah) {marah++}
-    else {tidakmarah++}
-}
-for (let i = 0; i < promiseTheaterVGC.length; i++) {
-    if (hasilsetelahmenonton.hasil = marah) {marah++}
-    else {tidakmarah++}
-}
-
-const promiseOutput = () => {
-    return new Promise((resolve, reject) => {
-        if (promiseTheaterIXX.length > 0 || promiseTheaterVGC.length >0) {
-            resolve("marah" = marah && "tidak marah" = tidakmarah);
-        } else {
-            reject("emosi = 0");
-        }
+function pertama(emosi) {
+  return new Promise(resolve => {
+    const theaterIXX = promiseTheaterIXX();
+    const film1 = theaterIXX.then((data) => {
+      const count = data.filter(item => item.hasil == emosi).length;
+      resolve(count)
     });
-};
+  });
+}
+
+function kedua(emosi) {
+  return new Promise(resolve => {
+    const theaterIXX = promiseTheaterVCG();
+    const film1 = theaterIXX.then((data) => {
+      const count = data.filter(item => item.hasil == emosi).length;
+      resolve(count)
+    });
+  });
+}
+
+function promiseOutput(emosi) {
+  return new Promise(resolve => {
+    const pertamaPromise = pertama(emosi);
+    const keduaPromise = kedua(emosi);
+    Promise.all([pertamaPromise, keduaPromise]).then(([hasil1, hasil2]) => {
+      resolve(hasil1 + hasil2)
+    })
+  })
+}
+
+const output = promiseOutput('marah');
+output.then(respon => console.log("Jumlah :", respon))
 
 module.exports = {
   promiseOutput,
-};lengt0
+}
